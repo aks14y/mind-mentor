@@ -9,10 +9,17 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import Navbar from "@/components/ui/navbar";
 import SectionHeader from "@/components/ui/section-header";
 import WaveDivider from "@/components/ui/wave-divider";
-import { Mail, Shield, Download, Trash2, User2, Edit, AlertCircle } from "lucide-react";
+import {
+  Mail,
+  Shield,
+  Download,
+  Trash2,
+  User2,
+  Edit,
+  AlertCircle,
+} from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 interface ProfileClientProps {
@@ -30,10 +37,7 @@ interface ProfileClientProps {
 export default function ProfileClient({ session }: ProfileClientProps) {
   const { toast } = useToast();
   const [isEditing, setIsEditing] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-  });
+  const [formData, setFormData] = useState({ name: "", email: "" });
 
   useEffect(() => {
     if (session?.user) {
@@ -66,27 +70,29 @@ export default function ProfileClient({ session }: ProfileClientProps) {
 
   return (
     <div className="min-h-screen bg-white">
-      <Navbar />
-
       <div className="bg-white py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionHeader 
-            eyebrow="Your account" 
-            title="Profile" 
-            subtitle="Manage your personal information and preferences" 
+        <div className="max-w-full mx-auto px-4 md:px-24">
+          <SectionHeader
+            eyebrow="Your account"
+            title="Profile"
+            subtitle="Manage your personal information and preferences"
           />
         </div>
       </div>
-      <WaveDivider color="white" bgColor="#2C7A9E" />
+      <WaveDivider
+        className="text-semantic-primary"
+        variant="gradient"
+        animate
+      />
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-6xl mx-auto px-4 md:px-24 py-8">
         <div className="flex flex-col space-y-8">
           {/* Profile Header */}
           <Card className="rounded-xl shadow-lg">
             <CardContent className="p-8">
               <div className="flex justify-between items-center flex-wrap gap-4">
                 <div className="flex items-center space-x-6">
-                  <Avatar className="h-24 w-24 border-4 border-brand-100">
+                  <Avatar className="h-24 w-24 border-4 border-semantic-primary/10">
                     <AvatarImage src={session.user?.image || undefined} />
                     <AvatarFallback>
                       {session.user?.name?.charAt(0) || "U"}
@@ -95,13 +101,13 @@ export default function ProfileClient({ session }: ProfileClientProps) {
                   <div className="flex flex-col space-y-2">
                     <div className="flex items-center space-x-2">
                       <User2 size={22} />
-                      <h1 className="text-2xl font-bold text-brand-700">
+                      <h1 className="text-2xl font-bold text-semantic-primary">
                         {session.user?.name || "User"}
                       </h1>
                     </div>
                     <div className="flex items-center space-x-2">
                       <Mail size={18} />
-                      <p className="text-gray-600 text-lg">
+                      <p className="text-semantic-body text-lg">
                         {session.user?.email}
                       </p>
                     </div>
@@ -117,7 +123,7 @@ export default function ProfileClient({ session }: ProfileClientProps) {
                 </div>
                 <div className="flex flex-col space-y-2">
                   <Button
-                    className="bg-blue-600 text-white hover:bg-blue-700"
+                    className="bg-semantic-secondary text-white hover:opacity-90"
                     onClick={() => setIsEditing(!isEditing)}
                   >
                     <Edit className="mr-2 h-4 w-4" />
@@ -139,7 +145,7 @@ export default function ProfileClient({ session }: ProfileClientProps) {
           <Card className="rounded-xl shadow-lg">
             <CardContent className="p-8">
               <div className="flex flex-col space-y-6">
-                <h2 className="text-xl font-semibold text-brand-700">
+                <h2 className="text-xl font-semibold text-cardHeader">
                   Profile Information
                 </h2>
 
@@ -149,7 +155,9 @@ export default function ProfileClient({ session }: ProfileClientProps) {
                     {isEditing ? (
                       <Input
                         value={formData.name}
-                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        onChange={(e) =>
+                          setFormData({ ...formData, name: e.target.value })
+                        }
                         placeholder="Enter your full name"
                       />
                     ) : (
@@ -167,7 +175,9 @@ export default function ProfileClient({ session }: ProfileClientProps) {
                         <Input
                           type="email"
                           value={formData.email}
-                          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                          onChange={(e) =>
+                            setFormData({ ...formData, email: e.target.value })
+                          }
                           placeholder="Enter your email"
                           className="pl-10"
                         />
@@ -189,10 +199,10 @@ export default function ProfileClient({ session }: ProfileClientProps) {
                   <div className="space-y-2">
                     <Label>Member Since</Label>
                     <div className="text-lg p-3 bg-gray-50 rounded-md">
-                      {new Date().toLocaleDateString('en-US', {
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric'
+                      {new Date().toLocaleDateString("en-US", {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
                       })}
                     </div>
                   </div>
@@ -203,7 +213,10 @@ export default function ProfileClient({ session }: ProfileClientProps) {
                     <Button variant="outline" onClick={handleCancel}>
                       Cancel
                     </Button>
-                    <Button className="bg-blue-600 text-white hover:bg-blue-700" onClick={handleSave}>
+                    <Button
+                      className="bg-semantic-secondary text-white hover:opacity-90"
+                      onClick={handleSave}
+                    >
                       Save Changes
                     </Button>
                   </div>
@@ -218,7 +231,7 @@ export default function ProfileClient({ session }: ProfileClientProps) {
               <div className="flex flex-col space-y-6">
                 <div className="flex items-center space-x-2">
                   <Shield size={18} />
-                  <h2 className="text-xl font-semibold text-brand-700">
+                  <h2 className="text-xl font-semibold text-cardHeader">
                     Security & Privacy
                   </h2>
                 </div>
@@ -235,7 +248,9 @@ export default function ProfileClient({ session }: ProfileClientProps) {
                   <div className="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
                     <div className="flex flex-col space-y-1">
                       <p className="font-medium">Two-Factor Authentication</p>
-                      <p className="text-sm text-gray-600">Add an extra layer of security</p>
+                      <p className="text-sm text-semantic-body">
+                        Add an extra layer of security
+                      </p>
                     </div>
                     <Button size="sm" variant="outline">
                       <Shield className="mr-2 h-4 w-4" />
@@ -246,7 +261,9 @@ export default function ProfileClient({ session }: ProfileClientProps) {
                   <div className="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
                     <div className="flex flex-col space-y-1">
                       <p className="font-medium">Data Export</p>
-                      <p className="text-sm text-gray-600">Download your therapy data</p>
+                      <p className="text-sm text-semantic-body">
+                        Download your therapy data
+                      </p>
                     </div>
                     <Button size="sm" variant="outline">
                       <Download className="mr-2 h-4 w-4" />
@@ -257,9 +274,15 @@ export default function ProfileClient({ session }: ProfileClientProps) {
                   <div className="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
                     <div className="flex flex-col space-y-1">
                       <p className="font-medium">Delete Account</p>
-                      <p className="text-sm text-gray-600">Permanently remove your account</p>
+                      <p className="text-sm text-semantic-body">
+                        Permanently remove your account
+                      </p>
                     </div>
-                    <Button size="sm" variant="outline" className="text-red-600 border-red-600 hover:bg-red-50">
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="text-red-600 border-red-600 hover:bg-red-50"
+                    >
                       <Trash2 className="mr-2 h-4 w-4" />
                       Delete
                     </Button>
@@ -273,5 +296,3 @@ export default function ProfileClient({ session }: ProfileClientProps) {
     </div>
   );
 }
-
-
