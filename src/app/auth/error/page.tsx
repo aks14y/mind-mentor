@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -7,24 +8,24 @@ import { AlertCircle, ArrowLeft, RefreshCw } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
-export default function AuthError() {
+function getErrorMessage(error: string | null) {
+  switch (error) {
+    case "Configuration":
+      return "There is a problem with the server configuration.";
+    case "AccessDenied":
+      return "Access was denied. You may not have permission to sign in.";
+    case "Verification":
+      return "The verification token has expired or has already been used.";
+    case "Default":
+      return "An error occurred during authentication.";
+    default:
+      return "An unexpected error occurred. Please try again.";
+  }
+}
+
+function ErrorContent() {
   const searchParams = useSearchParams();
   const error = searchParams.get("error");
-
-  const getErrorMessage = (error: string | null) => {
-    switch (error) {
-      case "Configuration":
-        return "There is a problem with the server configuration.";
-      case "AccessDenied":
-        return "Access was denied. You may not have permission to sign in.";
-      case "Verification":
-        return "The verification token has expired or has already been used.";
-      case "Default":
-        return "An error occurred during authentication.";
-      default:
-        return "An unexpected error occurred. Please try again.";
-    }
-  };
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -35,16 +36,14 @@ export default function AuthError() {
               <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
                 <AlertCircle className="h-8 w-8 text-red-600" />
               </div>
-              
+
               <h1 className="text-2xl font-bold text-gray-900 mb-4">
                 Authentication Error
               </h1>
-              
+
               <Alert className="mb-6">
                 <AlertCircle className="h-4 w-4" />
-                <AlertDescription>
-                  {getErrorMessage(error)}
-                </AlertDescription>
+                <AlertDescription>{getErrorMessage(error)}</AlertDescription>
               </Alert>
 
               <div className="space-y-4">
@@ -57,12 +56,8 @@ export default function AuthError() {
                     Try Again
                   </Link>
                 </Button>
-                
-                <Button
-                  variant="outline"
-                  asChild
-                  className="w-full"
-                >
+
+                <Button variant="outline" asChild className="w-full">
                   <Link href="/">
                     <ArrowLeft className="mr-2 h-4 w-4" />
                     Back to Home
@@ -71,9 +66,14 @@ export default function AuthError() {
               </div>
 
               <div className="mt-8 text-sm text-gray-500">
-                <p>If this problem persists, please contact our support team.</p>
+                <p>
+                  If this problem persists, please contact our support team.
+                </p>
                 <p className="mt-2">
-                  <Link href="/contact" className="text-brand-600 hover:text-brand-700">
+                  <Link
+                    href="/contact"
+                    className="text-brand-600 hover:text-brand-700"
+                  >
                     Get Help
                   </Link>
                 </p>
@@ -83,5 +83,19 @@ export default function AuthError() {
         </Card>
       </div>
     </div>
+  );
+}
+
+export default function AuthError() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+          <div className="text-gray-500">Loading...</div>
+        </div>
+      }
+    >
+      <ErrorContent />
+    </Suspense>
   );
 }
