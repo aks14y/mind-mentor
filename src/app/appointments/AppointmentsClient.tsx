@@ -53,6 +53,7 @@ export default function AppointmentsClient() {
       const data = await res.json();
       setAppointments(data.appointments || []);
     } catch (e) {
+      console.error("loadAppointments error", e);
       toast({
         title: "Failed to load",
         description: "Could not load appointments",
@@ -64,6 +65,7 @@ export default function AppointmentsClient() {
 
   useEffect(() => {
     loadAppointments();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const createAppointment = async () => {
@@ -89,6 +91,7 @@ export default function AppointmentsClient() {
         description: "Your appointment has been scheduled successfully",
       });
     } catch (e) {
+      console.error("createAppointment error", e);
       toast({
         title: "Failed to create appointment",
         description: "Please try again",

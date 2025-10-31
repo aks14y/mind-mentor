@@ -28,9 +28,9 @@ interface ProfileClientProps {
       name?: string | null;
       email?: string | null;
       image?: string | null;
-      [key: string]: any;
+      [key: string]: unknown;
     };
-    [key: string]: any;
+    [key: string]: unknown;
   };
 }
 
