@@ -654,7 +654,7 @@ export default function AboutClient({ aboutData }: AboutClientProps) {
             <Button
               variant="outline"
               size="lg"
-              className="border-white text-white hover:bg-white hover:text-semantic-primary text-lg px-8 py-3"
+              className="border-white text-white bg-transparent hover:bg-white hover:text-semantic-primary text-lg px-8 py-3"
             >
               Learn More
             </Button>
