@@ -6,7 +6,5 @@ import AppointmentsClient from "./AppointmentsClient";
 export default async function AppointmentsPage() {
   const session = await getServerSession(authOptions);
   if (!session) redirect("/auth/signin");
-  return <AppointmentsClient session={session} />;
+  return <AppointmentsClient />;
 }
-
-
