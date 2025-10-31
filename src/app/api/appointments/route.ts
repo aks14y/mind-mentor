@@ -22,7 +22,7 @@ const DATA_FILE = path.join(DATA_DIR, "appointments.json");
 async function readDb(): Promise<Db> {
   try {
     const raw = await fs.readFile(DATA_FILE, "utf8");
-    return JSON.parse(raw);
+    return JSON.parse(raw) as Db;
   } catch {
     return {} as Db;
   }

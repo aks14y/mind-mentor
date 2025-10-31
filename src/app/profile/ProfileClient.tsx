@@ -22,16 +22,10 @@ import {
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
+import type { Session } from "next-auth";
+
 interface ProfileClientProps {
-  session: {
-    user?: {
-      name?: string | null;
-      email?: string | null;
-      image?: string | null;
-      [key: string]: unknown;
-    };
-    [key: string]: unknown;
-  };
+  session: Session;
 }
 
 export default function ProfileClient({ session }: ProfileClientProps) {
